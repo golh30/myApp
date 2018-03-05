@@ -8,7 +8,8 @@ var api = {};
 
 api.search = function(req, res, next){
 	var params = {
-		logId: req.body.logId || ""
+		logId: req.body.logId || "",
+		searchBy: req.body.searchBy
 	};
 	LOG.info(componentName + ".search", req.body.logId, params);
 

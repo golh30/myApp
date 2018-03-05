@@ -307,12 +307,12 @@ userObj.registration = function(params, callb){
  */
 userObj.search = function(params, callb){
 	var error = {};
-	var query = {
-	};
+	var query = params.searchBy;
 	var subComp = ".search";
 	var logId = params.logId;
+	var obj = buildQuery(query);
 
-	userProfile.find(query, function(err, res){
+	userProfile.find(obj, function(err, res){
 		if(err){
 			error.msg 		= statics.commonError.serverErr.displayMsg;
 			error.status 	= statics.commonError.serverErr.status;
@@ -459,6 +459,28 @@ userObj.updateProfile = function(params, callb){
 };
 
 module.exports = userObj;
+
+function buildQuery(parameter) {
+	var obj = {};
+	if(parameter.hasOwnProperty("firstName")) {
+		obj["basic.firstName"] = parameter.firstName;
+	} else if(parameter.hasOwnProperty("lastName")) {
+		obj["basic.lastName"] = parameter.lastName;
+	} else if(parameter.hasOwnProperty("weight")) {
+		obj["basic.weight"] = parameter.weight;
+	} else if(parameter.hasOwnProperty("height")) {
+		obj["basic.height"] = parameter.height;
+	} else if(parameter.hasOwnProperty("religion")) {
+		obj["basic.religion"] = parameter.religion;
+	} else if(parameter.hasOwnProperty("cast")) {
+		obj["basic.cast"] = parameter.cast;
+	} else if(parameter.hasOwnProperty("profession")) {
+		obj["professional.about"] = parameter.profession;
+	} else if(parameter.hasOwnProperty("annualIncome")) {
+		obj["professional.annualIncome"] = parameter.annualIncome;
+	}
+	return obj;
+}
 
 (function(){
 	if(require.main == module){
